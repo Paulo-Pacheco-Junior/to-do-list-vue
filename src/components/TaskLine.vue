@@ -1,11 +1,16 @@
 <template>
-
-  <ul>
+<!-- LÓGICA INICIAL FUNCIONANDO:
+    Listar tarefas
+    Adicionar tarefa
+    Excluir tarefa
+    Marcar tarefa como concluída
+    AGORA ESTÓU COMPONENTIZANDO EM TASKLINE ONDE JÁ ESTÁ ESTILIZADA-->
+<ul>
     <li class="line" v-for="(task, index) in props.tasks" :key="index">
       <div class="check-text">
-        <input type="checkbox" v-model="checkedTasks[index]" id="myCheckbox" class="hidden-checkbox">
+        <input type="checkbox" v-model="checkedTasks" id="myCheckbox" class="hidden-checkbox">
         <label for="myCheckbox" class="checkbox-label">
-          <span :class="{ 'checkbox-icon': true, 'checked': checkedTasks[index] }"></span>
+          <span :class="{ 'checkbox-icon': true }"></span>
         </label>
         <div class="text-line"> {{ task }} </div> 
       </div>
@@ -14,23 +19,16 @@
   </ul>    
 
 </template>
-
+  
 <script setup>
 
-  import { ref } from 'vue';
   import { defineProps } from 'vue';
-
-  // const isChecked = ref(false);
 
   const props = defineProps({
     tasks: Array
   });
 
-  // const checkedTasks = ref(new Array(props.tasks.length).fill(false));
-  const checkedTasks = ref(Array.from({ length: props.tasks.length }).fill(false));
-
 </script>
-
 
 <style lang="stylus" scoped>
 
