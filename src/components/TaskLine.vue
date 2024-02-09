@@ -1,69 +1,36 @@
 <template>
 
-<!--Esse componente terá só um bloco li e ficará bem enxuto.
-Só nao fiz isso ainda porque farei quando implementar o <script>.
-Essa observação serve para todo o código.-->
+  <ul>
+    <li class="line" v-for="(task, index) in props.tasks" :key="index">
+      <div class="check-text">
+        <input type="checkbox" v-model="checkedTasks[index]" id="myCheckbox" class="hidden-checkbox">
+        <label for="myCheckbox" class="checkbox-label">
+          <span :class="{ 'checkbox-icon': true, 'checked': checkedTasks[index] }"></span>
+        </label>
+        <div class="text-line"> {{ task }} </div> 
+      </div>
+      <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
+    </li>
+  </ul>    
 
-    <ul>
-        <li class="line">
-          <div class="check-text">
-            <input type="checkbox" v-model="isChecked" id="myCheckbox" class="hidden-checkbox">
-            <label for="myCheckbox" class="checkbox-label">
-              <span :class="{ 'checkbox-icon': true, 'checked': !isChecked }"></span>
-            </label>
-            <div class="text-line text-done">Planejar Desonvolvimento do app Todolist</div>
-          </div>
-          <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
-        </li>
-        <li class="line">
-          <div class="check-text">
-            <input type="checkbox" v-model="isChecked" id="myCheckbox" class="hidden-checkbox">
-            <label for="myCheckbox" class="checkbox-label">
-              <span :class="{ 'checkbox-icon': true, 'checked': isChecked }"></span>
-            </label>
-            <div class="text-line">Criar projeto Vue.js</div>
-          </div>
-          <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
-        </li>
-        <li class="line">
-          <div class="check-text">
-            <input type="checkbox" v-model="isChecked" id="myCheckbox" class="hidden-checkbox">
-            <label for="myCheckbox" class="checkbox-label">
-              <span :class="{ 'checkbox-icon': true, 'checked': isChecked }"></span>
-            </label>
-            <div class="text-line">Montar telas HTML/CSS</div>
-          </div>
-          <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
-        </li>
-        <li class="line">
-          <div class="check-text">
-            <input type="checkbox" v-model="isChecked" id="myCheckbox" class="hidden-checkbox">
-            <label for="myCheckbox" class="checkbox-label">
-              <span :class="{ 'checkbox-icon': true, 'checked': isChecked }"></span>
-            </label>
-            <div class="text-line">Separar Componentes</div>
-          </div>
-          <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
-        </li>
-        <li class="line">
-          <div class="check-text">
-            <input type="checkbox" v-model="isChecked" id="myCheckbox" class="hidden-checkbox">
-            <label for="myCheckbox" class="checkbox-label">
-              <span :class="{ 'checkbox-icon': true, 'checked': isChecked }"></span>
-            </label>
-            <div class="text-line">Programar Componentes</div>
-          </div>
-          <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
-        </li>
-    </ul>             
 </template>
 
 <script setup>
-  import { ref } from 'vue';
 
-  const isChecked = ref(false);
+  import { ref } from 'vue';
+  import { defineProps } from 'vue';
+
+  // const isChecked = ref(false);
+
+  const props = defineProps({
+    tasks: Array
+  });
+
+  // const checkedTasks = ref(new Array(props.tasks.length).fill(false));
+  const checkedTasks = ref(Array.from({ length: props.tasks.length }).fill(false));
 
 </script>
+
 
 <style lang="stylus" scoped>
 

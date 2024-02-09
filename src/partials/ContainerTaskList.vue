@@ -1,29 +1,44 @@
 <template>
-    <div class="bloco-task"> 
-        <div class="tasklist">
-            <div class="text-task">
-                <div class="text-title-task">
-                    Minhas Tarefas
-                </div>
-                <div class="text-task-undone">
-                    Olá <span class="text-blue">Eduardo Pereira</span>, você tem <span class="text-blue-undone">4 tarefas</span> pendentes
-                </div>
-            </div>
-            <div class="search-task">
-                <input class="input-task" type="text" placeholder="Buscar Tarefas" required />
-                <span class="search-icon">
-                 <font-awesome-icon icon="magnifying-glass" style="color: #c3c8d0;"/>
-                </span>
-            </div>
 
-            <TaskLine />
-          </div>
+  <div class="bloco-task"> 
+    <div class="tasklist">
+      <div class="text-task">
+        <div class="text-title-task">
+            Minhas Tarefas 
         </div>
-        
+        <div class="text-task-undone">
+            Olá <span class="text-blue">Eduardo Pereira</span>, você tem <span class="text-blue-undone">4 tarefas</span> pendentes
+        </div>
+      </div>
+      <div class="search-task">
+        <input v-model="taskInput" @keyup.enter="addTask" class="input-task" 
+          type="text" placeholder="Buscar Tarefas" required
+        />
+        <span class="search-icon">
+          <font-awesome-icon icon="magnifying-glass" style="color: #c3c8d0;"/>
+        </span>
+      </div>
+      <TaskLine :tasks="tasks"/>
+    </div>
+  </div>
+
 </template>
 
-<script setup> 
-    import TaskLine from '@/components/TaskLine.vue';
+<script setup>  
+
+  import { ref } from 'vue';   
+  import TaskLine from '@/components/TaskLine.vue';
+
+  const tasks = ref([]);
+  const taskInput = ref('');
+
+  const addTask = () => {
+    if (taskInput.value.trim() !== '') {
+      tasks.value.push(taskInput.value.trim());
+      taskInput.value = '';
+    }
+  };
+
 </script>
 
 <style lang="stylus" scoped>
