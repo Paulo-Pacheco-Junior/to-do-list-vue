@@ -1,20 +1,26 @@
 <template>
-<!-- LÓGICA INICIAL FUNCIONANDO:
+  <!-- LÓGICA INICIAL FUNCIONANDO:
     Listar tarefas
     Adicionar tarefa
     Excluir tarefa
     Marcar tarefa como concluída
-    AGORA ESTÓU COMPONENTIZANDO EM TASKLINE ONDE JÁ ESTÁ ESTILIZADA-->
-<ul>
-    <li class="line" v-for="(task, index) in props.tasks" :key="index">
+
+    LISTA COMPONENTIZADA E ESTILIZADA EM components/Taskline
+    AGORA ESTOU ALTERANDO O ADICIONAR TAREFAS PARA O MODAL, AO INVÉS DO INPUT DE BUSCA 
+    Por enquanto o delete é no ícone Elipse Vertical-->
+
+  <ul>
+    <li class="line"  @click="toggleDone(task)" v-for="task in props.tasks" :key="task.id">
       <div class="check-text">
         <input type="checkbox" v-model="checkedTasks" id="myCheckbox" class="hidden-checkbox">
         <label for="myCheckbox" class="checkbox-label">
-          <span :class="{ 'checkbox-icon': true }"></span>
+          <span :class="['checkbox-icon', task.done ? 'iconchecked': '']"></span>
         </label>
-        <div class="text-line"> {{ task }} </div> 
+        <div :class="['text-line', task.done ? 'text-done': '']"> {{ task.content }} </div> 
       </div>
-      <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
+      <div class="delete-icon" @click="deleteTask(index)">
+        <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
+      </div>
     </li>
   </ul>    
 
@@ -27,6 +33,16 @@
   const props = defineProps({
     tasks: Array
   });
+
+  function toggleDone(task) {
+    task.done = !task.done;
+  }
+
+  const emits = defineEmits(['delete-task']);
+
+  function deleteTask(index) {
+    emits('delete-task', index);
+  }
 
 </script>
 
@@ -74,7 +90,7 @@ li
   border-radius: 3px
   margin-right: 5px
 
-.checkbox-icon.checked 
+.iconchecked 
   background-color: #7ce7bf
 
 .checkbox-icon::after 
@@ -88,5 +104,8 @@ li
 .hidden-checkbox 
   position: absolute
   left: -9999px
+
+.delete-icon
+  padding-left: 25px
 
 </style>

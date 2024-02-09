@@ -4,8 +4,11 @@
     Adicionar tarefa
     Excluir tarefa
     Marcar tarefa como concluída
-    AGORA ESTÓU COMPONENTIZANDO EM TASKLINE ONDE JÁ ESTÁ ESTILIZADA-->
-    
+
+    LISTA COMPONENTIZADA E ESTILIZADA EM components/Taskline
+    AGORA ESTOU ALTERANDO O ADICIONAR TAREFAS PARA O MODAL, AO INVÉS DO INPUT DE BUSCA 
+    Por enquanto o delete é no ícone Elipse Vertical-->
+
   <div class="bloco-task"> 
     <div class="tasklist">
       <div class="text-task">
@@ -24,13 +27,7 @@
           <font-awesome-icon icon="magnifying-glass" style="color: #c3c8d0;"/>
         </span>
       </form>
-      <!-- <TaskLine :tasks="tasks"/> -->
-      <ul>
-        <li v-for="(task,index) in tasks" :key="task.id" >
-          <h3 :class="{ inputdone: task.done }" @click="toggleDone(task)">{{task.content}}</h3>
-          <button @click="deleteTask(index)">excluir</button> 
-        </li>
-      </ul>
+      <TaskLine :tasks="tasks" @delete-task="deleteTask"/>
     </div>
   </div>
 
@@ -38,12 +35,12 @@
 
 <script setup>  
 
-  import { ref } from 'vue';   
+  import { ref } from 'vue';  
 
-  //import TaskLine from '@/components/TaskLine.vue';
+  import TaskLine from '@/components/TaskLine.vue';
   
-  const tasks =ref([]);
-  const newTask = ref('');
+   const tasks =ref([]);
+   const newTask = ref('');
 
   function addNewTask() {
     tasks.value.push({
@@ -54,14 +51,10 @@
     newTask.value='';
   }
 
-  function toggleDone(task) {
-    task.done = !task.done;
+  function deleteTask(index) {
+    tasks.value.splice(index, 1);
   }
 
-  function deleteTask(index) {
-    tasks.value = tasks.value.filter((task, i) => i !== index);
-  }
-  
 </script>
 
 <style lang="stylus" scoped>
@@ -110,8 +103,6 @@
   border-radius: 5px
   background-color: #e9f4fb
   
-.inputdone 
-  text-decoration: line-through
 
 .input-task:focus 
   border-color: #d1e5f2
