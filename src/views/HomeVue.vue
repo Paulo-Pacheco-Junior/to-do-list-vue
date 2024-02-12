@@ -1,12 +1,12 @@
 <template>
-    <!---------------------------------------------------------------------------
-      AMANHA VOU UTILIZAR O LOCALSTORAGE PARA PERSISTIR OS DADOS
-    -----------------------------------------------------------------------------
+    <!----------------------------------------------------------------------------
+      Fui Persistente no localstorage, mas os dados não foram persistidos a tempo
+    ------------------------------------------------------------------------------
     LÓGICA INICIAL FUNCIONANDO:
     - Listar tarefas
     - Adicionar tarefaS 
       -> AO CLICAR NO ÍCONE + O MODALINSERT ABRE
-      -> AO DIGITAR TÍTULO E DESCRICAO O BOTAO ADICIONAR FICA VERDE
+      -> AO DIGITAR O TÍTULO E A DESCRICAO O BOTAO ADICIONAR FICA VERDE
       -> AO CLICAR NO BOTAO ADICIONAR A TAREFA É CRIADA
       -> A TAREFA É ENVIADA PARA CONTAINERTASKLIST E EXIBIDA NA TASKLINE  
     - Marcar tarefa como concluída
