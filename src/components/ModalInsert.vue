@@ -1,5 +1,5 @@
 <template>
-    <div id="myModal" class="modal">
+    <div id="myModal" class="modal" v-show="props.show">
         <div class="modal-content">
             <div class="modal-container">             
                 <div class="top-row"> 
@@ -7,9 +7,9 @@
                     <span class="close" onclick="closeModal()">&times;</span>
                 </div>
                 <span class="label-text">Título:</span>
-                <input class="input-text" type="text" >
+                <input v-model="newTitle" class="input-text" type="text" required />
                 <span class="label-text">Descrição:</span>
-                <textarea class="textarea" />
+                <textarea v-model="newDescription" class="textarea" required />
                 <div class="bottom-row"> 
                     <div class="radios">
                         <input type="radio" id="radio1" name="radios">
@@ -17,16 +17,54 @@
                         <input type="radio" id="radio2" name="radios">
                         <label class="label-radio" for="radio2">Importante</label>
                     </div>
-                    <button>Adicionar</button>
+                    <button 
+                      @click="addTask" 
+                      :class="{ 'add-title': newTitle.trim() !== '' && newDescription.trim() !== ''}">
+                        Adicionar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
+<script setup> 
+
+  import { defineProps } from 'vue';
+  import { ref } from 'vue';
+
+  const props = defineProps({
+    show: Boolean
+  });
+
+  const tasks = ref([]);
+  const newTitle = ref('');
+  const newDescription = ref('');
+
+  function addTask() {
+    if (newTitle.value.trim() !== '' && newDescription.value.trim() !== '') {
+      const newTask = {
+        id: tasks.value.length + 1,
+        title: newTitle.value,
+        description: newDescription.value,
+        done: false
+      };
+      newTitle.value='';
+      newDescription.value='';
+      tasks.value.push(newTask);
+      emits('close-modal');
+      emits('send-task', newTask);
+    }  
+  }
+
+  const emits = defineEmits(['close-modal', 'send-task']);
+
+</script>
+
+
 <style lang="stylus" scoped>
 .modal 
-  display:none /* Altere de 'none' para 'block' para visualizar o modal */
+  display:block 
   position: fixed
   z-index: 1
   left: 0
@@ -114,8 +152,11 @@ button
   padding:10px 18px
   margin-top:15px
 
-
 button:hover 
   background-color: #16d08d
+
+.add-title
+  background-color: #16d08d
+
 
 </style>

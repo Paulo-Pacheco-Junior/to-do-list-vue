@@ -1,13 +1,4 @@
 <template>
-  <!-- LÓGICA INICIAL FUNCIONANDO:
-    Listar tarefas
-    Adicionar tarefa
-    Excluir tarefa
-    Marcar tarefa como concluída
-
-    LISTA COMPONENTIZADA E ESTILIZADA EM components/Taskline
-    AGORA ESTOU ALTERANDO O ADICIONAR TAREFAS PARA O MODAL, AO INVÉS DO INPUT DE BUSCA 
-    Por enquanto o delete é no ícone Elipse Vertical-->
 
   <div class="bloco-task"> 
     <div class="tasklist">
@@ -19,8 +10,8 @@
             Olá <span class="text-blue">Eduardo Pereira</span>, você tem <span class="text-blue-undone">4 tarefas</span> pendentes
         </div>
       </div>
-      <form class="search-task" @submit.prevent="addNewTask">
-        <input v-model="newTask"  class="input-task" 
+      <form class="search-task" >
+        <input class="input-task" 
           type="text" placeholder="Buscar Tarefas" required
         />
         <span class="search-icon">
@@ -29,32 +20,38 @@
       </form>
       <TaskLine :tasks="tasks" @delete-task="deleteTask"/>
     </div>
+    <div class="plus" @click="showModal=true"> 
+      <font-awesome-icon icon="plus" size="lg" />
+    </div>
+    <div v-show="showModal"> 
+      <ModalInsert 
+        :show="showModal"
+        @close-modal="showModal=false"
+        @send-task="receivedTask"
+      /> 
+    </div>   
   </div>
 
 </template>
 
 <script setup>  
 
+  import TaskLine from '@/components/TaskLine.vue';  
+  import ModalInsert from '@/components/ModalInsert.vue';
+
   import { ref } from 'vue';  
 
-  import TaskLine from '@/components/TaskLine.vue';
+  const tasks = ref([]);  
+  const showModal = ref(false);
   
-   const tasks =ref([]);
-   const newTask = ref('');
-
-  function addNewTask() {
-    tasks.value.push({
-      id:Date.now(),
-      done:false,
-      content:newTask.value,
-    });
-    newTask.value='';
+  const receivedTask = (newTask) => {
+    tasks.value.push(newTask);  
   }
-
-  function deleteTask(index) {
-    tasks.value.splice(index, 1);
+  
+  const deleteTask = (index) => {
+    tasks.value.splice(index,1);
   }
-
+  
 </script>
 
 <style lang="stylus" scoped>
@@ -67,6 +64,7 @@
   align-items: center
   height: 100%
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4)
+  position:relative
 
 .tasklist 
   width: 45%
@@ -120,5 +118,18 @@
 
 .input-task::placeholder 
   text-align: left
-  
+
+.plus
+  position: absolute
+  bottom: 20px
+  right: 20px
+  width: 50px
+  height: 50px
+  background-color: #1ad18f
+  border-radius:100%  
+  display: flex
+  justify-content: center
+  align-items: center
+  color:#fff
+
 </style>

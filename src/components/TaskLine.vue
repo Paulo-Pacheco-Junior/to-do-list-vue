@@ -1,29 +1,20 @@
 <template>
-  <!-- LÓGICA INICIAL FUNCIONANDO:
-    Listar tarefas
-    Adicionar tarefa
-    Excluir tarefa
-    Marcar tarefa como concluída
-
-    LISTA COMPONENTIZADA E ESTILIZADA EM components/Taskline
-    AGORA ESTOU ALTERANDO O ADICIONAR TAREFAS PARA O MODAL, AO INVÉS DO INPUT DE BUSCA 
-    Por enquanto o delete é no ícone Elipse Vertical-->
 
   <ul>
     <li class="line"  @click="toggleDone(task)" v-for="task in props.tasks" :key="task.id">
       <div class="check-text">
-        <input type="checkbox" v-model="checkedTasks" id="myCheckbox" class="hidden-checkbox">
+        <input type="checkbox" id="myCheckbox" class="hidden-checkbox">
         <label for="myCheckbox" class="checkbox-label">
           <span :class="['checkbox-icon', task.done ? 'iconchecked': '']"></span>
         </label>
-        <div :class="['text-line', task.done ? 'text-done': '']"> {{ task.content }} </div> 
+        <div :class="['text-line', task.done ? 'text-done': '']"> {{ task.title }} </div> 
       </div>
       <div class="delete-icon" @click="deleteTask(index)">
         <font-awesome-icon icon="ellipsis-vertical" style="color: #c3c8d0;" />
       </div>
     </li>
-  </ul>    
-
+  </ul>  
+    
 </template>
   
 <script setup>

@@ -1,5 +1,21 @@
 <template>
-
+    <!---------------------------------------------------------------------------
+      AMANHA VOU UTILIZAR O LOCALSTORAGE PARA PERSISTIR OS DADOS
+    -----------------------------------------------------------------------------
+    LÓGICA INICIAL FUNCIONANDO:
+    - Listar tarefas
+    - Adicionar tarefaS 
+      -> AO CLICAR NO ÍCONE + O MODALINSERT ABRE
+      -> AO DIGITAR TÍTULO E DESCRICAO O BOTAO ADICIONAR FICA VERDE
+      -> AO CLICAR NO BOTAO ADICIONAR A TAREFA É CRIADA
+      -> A TAREFA É ENVIADA PARA CONTAINERTASKLIST E EXIBIDA NA TASKLINE  
+    - Marcar tarefa como concluída
+      -> TOGGLE AO CLICAR EM UMA TAREFA 
+    - Excluir tarefa
+      -> AO CLICAR NO ÍCONE 'ELIPSE VERTICAL' DA TASKLINE A TAREFA É EXCLUÍDA
+      -> O MODALDELETE ESTÁ PRONTO 
+        MAS AINDA NÃO ESTÁ SENDO ACIONADO PARA A EXCLUSAO DE TAREFAS
+    ------------------------------------------------------------------------------>
   <div class="div-geral">
     <SideNavigation />
     <div class="bloco-principal">
@@ -9,24 +25,16 @@
         <ContainerTaskList />
       </div>
     </div>
-    <ModalInsert /> 
-    <ModalDelete /> 
   </div>
 
 </template>
 
-<!-- Para visualizar os Modais altere o display em .model de none para block
-     Cada vez que for visualizar um lembre de alterar o outro pra none    
--->
-  
 <script setup>
 
   import SideNavigation from '@/partials/SideNavigation.vue';
   import HeaderProfile from '@/partials/HeaderProfile.vue';
   import SideCategories from '@/partials/SideCategories.vue';
   import ContainerTaskList from '@/partials/ContainerTaskList.vue';
-  import ModalInsert from '@/components/ModalInsert.vue';
-  import ModalDelete from '@/components/ModalDelete.vue';
 
 </script>
   

@@ -1,5 +1,5 @@
 <template>
-    <div id="myModal" class="modal">
+    <div id="myModal" class="modal" v-on="props.show">
         <div class="modal-content">
             <div class="modal-container">             
                 <div class="trash-box"> 
@@ -10,17 +10,33 @@
                     <div class="text-warning">Esta ação não pode ser desfeita.</div>
                 </div>
                 <div class="btn-box"> 
-                    <button class="btn btn-success">Adicionar</button>
-                    <button class="btn btn-danger">Adicionar</button>   
+                    <button class="btn btn-success" @click="deleteTask">Confirmar</button>
+                    <button class="btn btn-danger">Cancelar</button>   
                 </div>
             </div>
         </div>
     </div>
 </template>
 
+<script setup> 
+
+  import { defineProps } from 'vue';
+
+  const props = defineProps({
+    show: Boolean
+  });
+
+  const deleteTask = () => {
+    emits('close-modal');
+  }
+
+  const emits = defineEmits(['close-modal']);
+
+</script>
+
 <style lang="stylus" scoped>
 .modal 
-  display: none  /* Altere de 'none' para 'block' para visualizar o modal */
+  display: block  /* Altere de 'none' para 'block' para visualizar o modal */
   position: fixed
   z-index: 1
   left: 0
